@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Express - Medicine Delivery Service</title>
+    
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #22d3ee;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f1f5f9;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #030712;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background: linear-gradient(to bottom right, #000000, #130F40);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        .shape1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .shape2 {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            right: 10%;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        .shape3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 50%;
+            animation: float 25s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(10px) translateX(-10px); }
+            75% { transform: translateY(-10px) translateX(20px); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 540px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.9) 0%, rgba(139, 92, 246, 0.9) 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -100%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-50%); }
+            50% { transform: translateX(50%); }
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Form Container */
+        .form-container {
+            padding: 30px;
+        }
+
+        /* Camera Section */
+        .camera-section {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .camera-section h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Webcam Modal */
+        .webcam-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .webcam-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #webcamVideo {
+            width: 100%;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        .webcam-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .capture-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .capture-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .close-webcam {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 12px 30px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* Preview Section */
+        .preview-section {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .preview-image {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .preview-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            color: #10b981;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Input Fields */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #e2e8f0;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #f87171;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Select Dropdown */
+        select.input-field {
+            cursor: pointer;
+        }
+
+        select.input-field option {
+            background: #1e293b;
+            color: white;
+        }
+
+        /* Textarea */
+        textarea.input-field {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(99, 102, 241, 0.1);
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #94a3b8;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* Success/Error Messages */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        /* WhatsApp Section */
+        .whatsapp-section {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .whatsapp-section p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+
+        /* File inputs hidden */
+        .file-input {
+            display: none;
+        }
+
+        /* Canvas for captured image */
+        #captureCanvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape shape1"></div>
+            <div class="shape shape2"></div>
+            <div class="shape shape3"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="glass-card">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo">💊</div>
+                <h1>MediCare Express</h1>
+                <p>Premium Medicine Delivery Service</p>
+                <div class="badge">📍 Nugegoda • Maharagama • Kottawa</div>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container">
+                <!-- Success Message -->
+                <div class="alert alert-success" id="successMessage">
+                    ✅ Order submitted successfully! We'll contact you within 30 minutes.
+                </div>
+
+                <!-- Error Message -->
+                <div class="alert alert-error" id="errorMessage">
+                    ❌ Something went wrong. Please try again or contact us via WhatsApp.
+                </div>
+
+                <!-- Order Form -->
+                <form id="medicineForm">
+                    <!-- Camera/Upload Section -->
+                    <div class="camera-section">
+                        <h3>
+                            <span class="icon">📸</span>
+                            Upload Your Prescription
+                        </h3>
+                        
+                        <div class="button-group">
+                            <button type="button" class="btn btn-primary" onclick="handleTakePhoto()">
+                                📷 Take Photo
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">
+                                📁 Upload File
+                            </button>
+                        </div>
+
+                        <!-- Hidden file inputs -->
+                        <input type="file" id="fileInput" class="file-input" accept="image/*,application/pdf" onchange="handleFileSelect(event)">
+                        <input type="file" id="cameraInput" class="file-input" accept="image/*" capture="environment" onchange="handleFileSelect(event)">
+
+                        <!-- Preview Section -->
+                        <div class="preview-section" id="previewSection">
+                            <img id="previewImage" class="preview-image" alt="Prescription preview">
+                            <div class="preview-info">
+                                ✅ Prescription uploaded successfully
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="input-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" class="input-field" id="fullName" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Primary Phone <span class="required">*</span></label>
+                        <input type="tel" class="input-field" id="phone1" required placeholder="07X XXX XXXX" pattern="[0-9]{10}">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Secondary Phone (Optional)</label>
+                        <input type="tel" class="input-field" id="phone2" placeholder="07X XXX XXXX" pattern="[0-9]{10}">
+                    </div>
+
+                    <div class="input-group">
+                        <label>WhatsApp Number <span class="required">*</span></label>
+                        <input type="tel" class="input-field" id="whatsapp" required placeholder="07X XXX XXXX" pattern="[0-9]{10}">
+                    </div>
+
+                    <!-- Delivery Details -->
+                    <div class="input-group">
+                        <label>Delivery Address <span class="required">*</span></label>
+                        <textarea class="input-field" id="address" required placeholder="House/Flat No, Street Name, Area, Landmark"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Preferred Delivery Date <span class="required">*</span></label>
+                        <input type="date" class="input-field" id="deliveryDate" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Preferred Time Slot <span class="required">*</span></label>
+                        <select class="input-field" id="deliveryTime" required>
+                            <option value="">Select Time Slot</option>
+                            <option value="9AM-12PM">Morning (9:00 AM - 12:00 PM)</option>
+                            <option value="12PM-3PM">Afternoon (12:00 PM - 3:00 PM)</option>
+                            <option value="3PM-6PM">Evening (3:00 PM - 6:00 PM)</option>
+                            <option value="6PM-9PM">Night (6:00 PM - 9:00 PM)</option>
+                        </select>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div class="input-group">
+                        <label>Special Instructions (Optional)</label>
+                        <textarea class="input-field" id="notes" placeholder="Any specific medicine brands, allergies, or delivery instructions?"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        PLACE ORDER NOW
+                    </button>
+
+                    <!-- Loading Spinner -->
+                    <div class="loading" id="loadingSpinner">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Processing your order...</div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- WhatsApp Section -->
+            <div class="whatsapp-section">
+                <p>Need immediate assistance?</p>
+                <a href="https://wa.me/94771234567?text=Hi!%20I%20need%20medicine%20delivery%20service" class="btn-whatsapp" target="_blank">
+                    💬 Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Webcam Modal -->
+    <div class="webcam-modal" id="webcamModal">
+        <div class="webcam-container">
+            <video id="webcamVideo" autoplay></video>
+            <canvas id="captureCanvas"></canvas>
+            <div class="webcam-controls">
+                <button class="capture-btn" onclick="capturePhoto()">📸 Capture Photo</button>
+                <button class="close-webcam" onclick="closeWebcam()">✕ Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Google Apps Script URL - Replace with your deployed URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyv-obOEBBmx8W4i4kn8BguTOL7Ciz1H1l0H-QQaw_6gO2bPUoUVOEU2O8NCTBGm69A/exec';
+        
+        let selectedFile = null;
+        let stream = null;
+
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('deliveryDate').min = today;
+            document.getElementById('deliveryDate').value = today;
+        });
+
+        // Detect device type
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Handle Take Photo button click
+        function handleTakePhoto() {
+            if (isMobileDevice()) {
+                // On mobile, open camera directly
+                document.getElementById('cameraInput').click();
+            } else {
+                // On desktop, open webcam
+                openWebcam();
+            }
+        }
+
+        // Open webcam for desktop
+        async function openWebcam() {
+            const modal = document.getElementById('webcamModal');
+            const video = document.getElementById('webcamVideo');
+            
+            try {
+                modal.style.display = 'block';
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing webcam:', err);
+                alert('Unable to access camera. Please upload a file instead.');
+                closeWebcam();
+            }
+        }
+
+        // Capture photo from webcam
+        function capturePhoto() {
+            const video = document.getElementById('webcamVideo');
+            const canvas = document.getElementById('captureCanvas');
+            const context = canvas.getContext('2d');
+            
+            // Set canvas size to video size
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Draw video frame to canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Convert canvas to blob
+            canvas.toBlob(function(blob) {
+                // Create a file from blob
+                const file = new File([blob], 'webcam-capture.jpg', { type: 'image/jpeg' });
+                
+                // Process the captured image
+                processFile(file);
+                
+                // Close webcam
+                closeWebcam();
+            }, 'image/jpeg', 0.9);
+        }
+
+        // Close webcam
+        function closeWebcam() {
+            const modal = document.getElementById('webcamModal');
+            const video = document.getElementById('webcamVideo');
+            
+            modal.style.display = 'none';
+            
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            
+            video.srcObject = null;
+        }
+
+        // Handle file selection
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+
+        // Process selected/captured file
+        function processFile(file) {
+            selectedFile = file;
+            
+            // Show preview for images
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                    document.getElementById('previewImage').style.display = 'block';
+                    document.getElementById('previewSection').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else if (file.type === 'application/pdf') {
+                // For PDF files
+                document.getElementById('previewImage').style.display = 'none';
+                document.getElementById('previewSection').style.display = 'block';
+                document.querySelector('.preview-info').textContent = `✅ PDF uploaded: ${file.name}`;
+            }
+        }
+
+        // Convert file to base64
+        function convertToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Form submission
+        document.getElementById('medicineForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validate prescription upload
+            if (!selectedFile) {
+                alert('Please upload a prescription image or PDF');
+                return;
+            }
+
+            // Show loading, hide messages
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+
+            try {
+                // Convert file to base64
+                const base64 = await convertToBase64(selectedFile);
+                
+                // Prepare form data
+                const formData = {
+                    fullName: document.getElementById('fullName').value.trim(),
+                    phone1: document.getElementById('phone1').value.trim(),
+                    phone2: document.getElementById('phone2').value.trim(),
+                    whatsapp: document.getElementById('whatsapp').value.trim(),
+                    address: document.getElementById('address').value.trim(),
+                    deliveryDate: document.getElementById('deliveryDate').value,
+                    deliveryTime: document.getElementById('deliveryTime').value,
+                    notes: document.getElementById('notes').value.trim(),
+                    fileName: selectedFile.name,
+                    fileType: selectedFile.type,
+                    fileData: base64,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Send to Google Apps Script
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('medicineForm').reset();
+                document.getElementById('previewSection').style.display = 'none';
+                selectedFile = null;
+                
+                // Set today's date again
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('deliveryDate').value = today;
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Auto-hide success message after 10 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 10000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                // Auto-hide error message after 10 seconds
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 10000);
+            } finally {
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('loadingSpinner').style.display = 'none';
+            }
+        });
+
+        // Close webcam on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('webcamModal').style.display === 'block') {
+                closeWebcam();
+            }
+        });
+    </script>
+</body>
+</html>
